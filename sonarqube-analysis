@@ -1,9 +1,10 @@
 node {
   stage('SCM') {
-    git 'https://github.com/sivakumarsakkarai/demo_java.git'
+    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/sivakumarsakkarai/demo_java.git']]])
   }
   stage('SonarQube analysis') {
     withSonarQubeEnv('df-sonar') {
+      tool name: 'maven', type: 'maven'
       sh 'mvn clean package sonar:sonar'
     } // submitted SonarQube taskId is automatically attached to the pipeline context
   }
