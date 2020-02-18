@@ -4,7 +4,7 @@ node {
   }
   stage('SonarQube analysis') {
     withSonarQubeEnv('df-sonar') {
-      tool name: 'maven', type: 'maven'
+    def mvnHOME=tool name: 'maven', type: 'maven'
       sh 'mvn clean package sonar:sonar'
     } // submitted SonarQube taskId is automatically attached to the pipeline context
   }
